@@ -9,12 +9,12 @@ public class PlayerMove : MonoBehaviour
     public float speed;
     RaycastHit hit;
     List<string> itemsInInventory = new List<string>();
-    bool flag = false;
+    bool objectHit = false;
 
     void Start()
     {
         targ_pos = 0;
-        hit = new RaycastHit();
+        //hit = new RaycastHit();
         //TextAsset loadedText = Resources.Load<TextAsset>("DataBase");
         //string s = loadedText.text;
         //Debug.Log(s);
@@ -28,21 +28,30 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0)) {
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Physics.Raycast(ray, out hit);
-            targ_pos = Vector3.Distance(transform.position, hit.point);
-            flag = true;
+            if (Physics.Raycast(ray, out hit)) {
+                targ_pos = Vector3.Distance(transform.position, hit.point);
+                objectHit = true;
+            } else { objectHit = false; }
+
         }
         if (Input.GetKeyDown(KeyCode.Space)) {
             for (int i = 0; i < itemsInInventory.Count; i++) {
                 Debug.Log(itemsInInventory[i]);
             }
         }
-        if (flag) {
+        if (objectHit) {
             if (hit.collider.tag.Equals("Enemies") && targ_pos < 2) {
                 Debug.Log("You kill the " + hit.collider.name);
                 Destroy(hit.collider.gameObject);
                 targ_pos = 0;
-                flag = false;
+                objectHit = false;
+            }
+            else if (hit.collider.tag.Equals("Items") && targ_pos < 2) {
+                Debug.Log("You earn the " + hit.collider.name);
+                itemsInInventory.Add(hit.collider.name);
+                Destroy(hit.collider.gameObject);
+                targ_pos = 0;
+                objectHit = false;
             } else {
                 direction = hit.point - transform.position;
                 if (targ_pos > speed) {
@@ -61,16 +70,16 @@ public class PlayerMove : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Equals("Items")) {
-            Debug.Log("You earn " + other.name);
-            itemsInInventory.Add(other.name);
-            //Debug.Log(resoursesInInventory.Count);
-        }
-        if (other.tag.Equals("Enemies")) {
-            Debug.Log("You hit " + other.name);
+        //if (other.tag.Equals("Items")) {
+            //Debug.Log("You earn " + other.name);
             //itemsInInventory.Add(other.name);
             //Debug.Log(resoursesInInventory.Count);
-        }
+        //}
+        //if (other.tag.Equals("Enemies")) {
+            //Debug.Log("You hit " + other.name);
+            //itemsInInventory.Add(other.name);
+            //Debug.Log(resoursesInInventory.Count);
+        //}
     }
     
 }
