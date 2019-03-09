@@ -8,7 +8,7 @@ public class Items : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag.Equals("Player")) {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
     void Start()
