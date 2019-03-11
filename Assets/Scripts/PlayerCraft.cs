@@ -4,44 +4,57 @@ using UnityEngine;
 
 public class PlayerCraft : MonoBehaviour
 {
+    public static string itemToCraftName = "Nothing";
     bool tryToCraft = false;
     bool showCraft = false;
-    GameObject campFire;
+    GameObject itemToCraft;
     // Start is called before the first frame update
     void Start()
     {
-        campFire = Resources.Load<GameObject>("Craft/CampFire");
+        //itemToCraft = Resources.Load<GameObject>("Craft/CampFire");
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(itemToCraftName);
         if (Input.GetKeyDown(KeyCode.K)) { tryToCraft = true; }
+        if (!itemToCraftName.Equals("Nothing")){
+            TryToCraftItem(itemToCraftName);
+        }
+        
+    }
+    public void TryToCraftItem(string itemToMakeCraft) {
+        if (itemToCraft == null) {
+            itemToCraft = Resources.Load<GameObject>("Craft/" + itemToMakeCraft);
+        }
         if (tryToCraft) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit)) {
                 if (!showCraft) {
-                    campFire.transform.position = hit.point;
-                    campFire.GetComponent<BoxCollider>().enabled = false;
-                    campFire = Instantiate(campFire);
+                    itemToCraft.transform.position = hit.point;
+                    itemToCraft.GetComponent<MeshCollider>().enabled = false;
+                    itemToCraft = Instantiate(itemToCraft);
                     showCraft = true;
                 }
                 if (showCraft) {
-                    campFire.transform.position = hit.point;
+                    itemToCraft.transform.position = hit.point;
                     if (Input.GetKeyDown(KeyCode.Mouse0)) {
                         tryToCraft = false;
                         showCraft = false;
-                        campFire.GetComponent<BoxCollider>().enabled = true;
-                        campFire = Resources.Load<GameObject>("Craft/CampFire");
+                        itemToCraft.GetComponent<MeshCollider>().enabled = true;
+                        itemToCraft = null;
+                        itemToCraftName = "Nothing";
                     }
                 }
-                if (Input.GetKeyDown(KeyCode.Escape)) {
-                    tryToCraft = false;
-                }
+
             }
         }
-            
-        
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            Destroy(itemToCraft);
+            itemToCraft = null;
+            itemToCraftName = "Nothing";
+        }
     }
 }
