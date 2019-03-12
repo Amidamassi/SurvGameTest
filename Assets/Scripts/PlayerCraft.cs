@@ -5,20 +5,11 @@ using UnityEngine;
 public class PlayerCraft : MonoBehaviour
 {
     public static string itemToCraftName = "Nothing";
-    bool tryToCraft = false;
     bool showCraft = false;
     GameObject itemToCraft;
-    // Start is called before the first frame update
-    void Start()
-    {
-        //itemToCraft = Resources.Load<GameObject>("Craft/CampFire");
-    }
 
-    // Update is called once per frame
     void Update()
     {
-        Debug.Log(itemToCraftName);
-        if (Input.GetKeyDown(KeyCode.K)) { tryToCraft = true; }
         if (!itemToCraftName.Equals("Nothing")){
             TryToCraftItem(itemToCraftName);
         }
@@ -28,7 +19,6 @@ public class PlayerCraft : MonoBehaviour
         if (itemToCraft == null) {
             itemToCraft = Resources.Load<GameObject>("Craft/" + itemToMakeCraft);
         }
-        if (tryToCraft) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit)) {
@@ -40,8 +30,7 @@ public class PlayerCraft : MonoBehaviour
                 }
                 if (showCraft) {
                     itemToCraft.transform.position = hit.point;
-                    if (Input.GetKeyDown(KeyCode.Mouse0)) {
-                        tryToCraft = false;
+                    if (Input.GetKeyDown(KeyCode.Mouse2)) {
                         showCraft = false;
                         itemToCraft.GetComponent<MeshCollider>().enabled = true;
                         itemToCraft = null;
@@ -50,11 +39,15 @@ public class PlayerCraft : MonoBehaviour
                 }
 
             }
-        }
+
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Destroy(itemToCraft);
             itemToCraft = null;
             itemToCraftName = "Nothing";
         }
+    }
+    public void ItemChangeName(string name)
+    {
+        itemToCraftName = name;
     }
 }
