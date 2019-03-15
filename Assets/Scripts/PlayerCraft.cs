@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerCraft : MonoBehaviour
 {
-    public static string itemToCraftName = "Nothing";
-    bool showCraft = false;
+    private static string itemToCraftName = "Nothing";
+    private static bool showCraft = false;
+    private static bool newItem = true;
     GameObject itemToCraft;
 
     void Update()
@@ -16,8 +17,9 @@ public class PlayerCraft : MonoBehaviour
         
     }
     public void TryToCraftItem(string itemToMakeCraft) {
-        if (itemToCraft == null) {
+        if (newItem) {
             itemToCraft = Resources.Load<GameObject>("Craft/" + itemToMakeCraft);
+            newItem = false;
         }
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -44,10 +46,20 @@ public class PlayerCraft : MonoBehaviour
             Destroy(itemToCraft);
             itemToCraft = null;
             itemToCraftName = "Nothing";
+            showCraft = false;
         }
+    }
+    private void DestroyItem()
+    {
+        Destroy(itemToCraft);
+        itemToCraft = null;
+        showCraft = false;
+        newItem = true;
     }
     public void ItemChangeName(string name)
     {
+        Debug.Log(name);
         itemToCraftName = name;
+        DestroyItem();
     }
 }
