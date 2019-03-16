@@ -44,7 +44,10 @@ public class PlayerCraft : MonoBehaviour
             Destroy(itemToCraft);
             itemToCraft = null;
 <<<<<<< HEAD
+<<<<<<< HEAD
             showCraft = false;
+=======
+>>>>>>> parent of aabc400... added Inventory
 =======
 >>>>>>> parent of aabc400... added Inventory
             itemToCraftName = "Nothing";
@@ -54,7 +57,10 @@ public class PlayerCraft : MonoBehaviour
     {
         itemToCraftName = name;
 <<<<<<< HEAD
+<<<<<<< HEAD
         Destroy(itemToCraft);
+=======
+>>>>>>> parent of aabc400... added Inventory
 =======
 >>>>>>> parent of aabc400... added Inventory
     }
