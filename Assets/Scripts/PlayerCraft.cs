@@ -43,13 +43,19 @@ public class PlayerCraft : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Destroy(itemToCraft);
             itemToCraft = null;
+<<<<<<< HEAD
             showCraft = false;
+=======
+>>>>>>> parent of aabc400... added Inventory
             itemToCraftName = "Nothing";
         }
     }
     public void ItemChangeName(string name)
     {
         itemToCraftName = name;
+<<<<<<< HEAD
         Destroy(itemToCraft);
+=======
+>>>>>>> parent of aabc400... added Inventory
     }
 }

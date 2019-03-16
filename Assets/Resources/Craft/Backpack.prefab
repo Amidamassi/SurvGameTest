@@ -27,7 +27,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1782840061}
   m_LocalRotation: {x: -0.053727362, y: 0, z: -0, w: 0.99855566}
+<<<<<<< HEAD
   m_LocalPosition: {x: 101.14238, y: 67.888664, z: 407.40427}
+=======
+  m_LocalPosition: {x: 101.41543, y: 64.00202, z: 427.5089}
+>>>>>>> parent of aabc400... added Inventory
   m_LocalScale: {x: 72.329895, y: 72.329895, z: 72.329895}
   m_Children: []
   m_Father: {fileID: 0}
