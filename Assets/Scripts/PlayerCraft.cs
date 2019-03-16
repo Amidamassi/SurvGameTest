@@ -43,11 +43,13 @@ public class PlayerCraft : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Destroy(itemToCraft);
             itemToCraft = null;
+            showCraft = false;
             itemToCraftName = "Nothing";
         }
     }
     public void ItemChangeName(string name)
     {
         itemToCraftName = name;
+        Destroy(itemToCraft);
     }
 }
