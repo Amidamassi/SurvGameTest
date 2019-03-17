@@ -10,7 +10,7 @@ public class PlayerMove : MonoBehaviour
     RaycastHit hit;
     List<string> itemsInInventory = new List<string>();
     bool objectHit = false;
-
+    bool tryToRotate;
     void Start()
     {
         targ_pos = 0;
@@ -31,6 +31,8 @@ public class PlayerMove : MonoBehaviour
             if (Physics.Raycast(ray, out hit)) {
                 targ_pos = Vector3.Distance(transform.position, hit.point);
                 objectHit = true;
+                tryToRotate = true;
+
             } else { objectHit = false; }
 
         }
@@ -55,8 +57,14 @@ public class PlayerMove : MonoBehaviour
             } else {
                 direction = hit.point - transform.position;
                 if (targ_pos > speed) {
+                    
+                    //Vector3.Angle(transform.forward, new Vector3(hit.point.x, transform.position.y, hit.point.z));
                     transform.Translate(direction.normalized * speed, Space.World);
                     targ_pos = targ_pos - speed;
+                    if (tryToRotate) {
+                        transform.Rotate(0, Vector3.Angle(new Vector3(0, 0, 1),transform.TransformVector( new Vector3(hit.point.x,0,hit.point.y))), 0);
+                        tryToRotate = false;
+                    }
                 }
             }
         }
@@ -81,5 +89,6 @@ public class PlayerMove : MonoBehaviour
             //Debug.Log(resoursesInInventory.Count);
         //}
     }
+    
     
 }

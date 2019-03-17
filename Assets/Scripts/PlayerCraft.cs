@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PlayerCraft : MonoBehaviour
 {
-    public static string itemToCraftName = "Nothing";
-    bool showCraft = false;
-    GameObject itemToCraft;
+    private static string itemToCraftName = "Nothing";
+    private static bool showCraft = false;
+    private static bool newItem = true;
+    private static GameObject itemToCraft;
 
     void Update()
     {
@@ -16,8 +17,9 @@ public class PlayerCraft : MonoBehaviour
         
     }
     public void TryToCraftItem(string itemToMakeCraft) {
-        if (itemToCraft == null) {
+        if (newItem) {
             itemToCraft = Resources.Load<GameObject>("Craft/" + itemToMakeCraft);
+            newItem = false;
         }
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -43,25 +45,17 @@ public class PlayerCraft : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Destroy(itemToCraft);
             itemToCraft = null;
-<<<<<<< HEAD
-<<<<<<< HEAD
-            showCraft = false;
-=======
->>>>>>> parent of aabc400... added Inventory
-=======
->>>>>>> parent of aabc400... added Inventory
             itemToCraftName = "Nothing";
+            showCraft = false;
         }
     }
     public void ItemChangeName(string name)
     {
+        Debug.Log(name);
         itemToCraftName = name;
-<<<<<<< HEAD
-<<<<<<< HEAD
         Destroy(itemToCraft);
-=======
->>>>>>> parent of aabc400... added Inventory
-=======
->>>>>>> parent of aabc400... added Inventory
+        itemToCraft = null;
+        showCraft = false;
+        newItem = true;
     }
 }
