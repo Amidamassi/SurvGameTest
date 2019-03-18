@@ -48,7 +48,7 @@ public class InterfaceManager : MonoBehaviour
     public void CraftType(string typeName)
     {
         Destroy(craftTypeView);
-        craftTypeView = Resources.Load<GameObject>("Inventory/" + typeName);
+        craftTypeView = Resources.Load<GameObject>("Craft/" + typeName);
         craftTypeView = Instantiate(craftTypeView,craftTypes.transform);
     }
     private void InventoryDraw()

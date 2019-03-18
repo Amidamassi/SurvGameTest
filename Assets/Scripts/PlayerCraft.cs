@@ -7,7 +7,7 @@ public class PlayerCraft : MonoBehaviour
     private static string itemToCraftName = "Nothing";
     private static bool showCraft = false;
     private static bool newItem = true;
-    GameObject itemToCraft;
+    private static GameObject itemToCraft;
 
     void Update()
     {
@@ -49,17 +49,13 @@ public class PlayerCraft : MonoBehaviour
             showCraft = false;
         }
     }
-    private void DestroyItem()
-    {
-        Destroy(itemToCraft);
-        itemToCraft = null;
-        showCraft = false;
-        newItem = true;
-    }
     public void ItemChangeName(string name)
     {
         Debug.Log(name);
         itemToCraftName = name;
-        DestroyItem();
+        Destroy(itemToCraft);
+        itemToCraft = null;
+        showCraft = false;
+        newItem = true;
     }
 }
